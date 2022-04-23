@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('pHead')%>
+
+<body>
+
+    <%- include('pNav') %>
+    
+    <div class="details content">
+        <h2>Blog name: <%= blog.title %></h2>
+        <div class="content">
+            <p>
+                <%= blog.body %>
+            </p>
+        </div>
+        <a class="delete" data-doc="<%= blog._id %>">Delete</a>
+    </div>
+
+    <script>
+        const deleteBtn = document.querySelector('a.delete'); 
+        deleteBtn.addEventListener('click', (e) =>{
+            const requestURL = `/blogs/${deleteBtn.dataset.doc}`; //defines the endpoint of the action to '/blogs/blog._id'
+            fetch(requestURL, { method : "DELETE" })
+            .then((response) => response.json())
+            .then((data) => window.location.href = data.redirect )
+            .catch(err =>{
+                console.log(err); })
+        })
+        
+    </script>
+    <%- include('pFooter') %>
+
+</body>
+</html>
